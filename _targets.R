@@ -19,27 +19,27 @@ p1_targets_list <- list(
   # ),
   tar_target(
     nwis_01427207_data_csv,
-    download_nwis_site_data("01427207", create_directories),
+    download_nwis_site_data("01427207","nwis_01427207_data.csv"),
     format = "file"
   ),
   tar_target(
     nwis_01432160_data_csv,
-    download_nwis_site_data("01432160", create_directories),
+    download_nwis_site_data("01432160","nwis_01432160_data.csv"),
     format = "file"
   ),
   tar_target(
     nwis_01435000_data_csv,
-    download_nwis_site_data("01435000", create_directories),
+    download_nwis_site_data("01435000","nwis_01435000_data.csv"),
     format = "file"
   ),
   tar_target(
     nwis_01436690_data_csv,
-    download_nwis_site_data("01436690", create_directories),
+    download_nwis_site_data("01436690","nwis_01436690_data.csv"),
     format = "file"
   ),
   tar_target(
     nwis_01466500_data_csv,
-    download_nwis_site_data("01466500", create_directories),
+    download_nwis_site_data("01466500","nwis_01466500_data.csv"),
     format = "file"
   ),
   tar_target(

@@ -1,8 +1,5 @@
 
 download_nwis_site_data <- function(site_num, download_files_to){
-  #create a directory to download the files to
-  download_files_to <- file.path('1_fetch/out', paste0('nwis_', site_num, '_data.csv'))
-  
   # readNWISdata is from the dataRetrieval package
   data_out <- readNWISdata(sites=site_num, service="iv", 
                            parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01")
