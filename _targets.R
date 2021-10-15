@@ -44,7 +44,7 @@ p1_targets_list <- list(
   ),
   tar_target(
     site_data_concat,
-    concat_files_to_df(nwis_01427207_data_csv, nwis_01432160_data_csv, nwis_01435000_data_csv, nwis_01436690_data_csv, nwis_01466500_data_csv)
+    concat_files_to_df(c(nwis_01427207_data_csv, nwis_01432160_data_csv, nwis_01435000_data_csv, nwis_01436690_data_csv, nwis_01466500_data_csv))
   ),
   tar_target(
     site_info_csv,

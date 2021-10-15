@@ -14,8 +14,8 @@ download_nwis_site_data <- function(site_num, download_files_to){
   return(download_files_to)
 }
 
-concat_files_to_df <- function(csv_1, csv_2, csv_3, csv_4, csv_5){
-  downloaded_files <- c(csv_1, csv_2, csv_3, csv_4, csv_5)
+concat_files_to_df <- function(downloaded_files){
+  #downloaded_files <- c(csv_1, csv_2, csv_3, csv_4, csv_5)
   data_out <- data.frame()
   for(df in downloaded_files){
     these_data <- read_csv(df, col_types = 'ccTdcc')
