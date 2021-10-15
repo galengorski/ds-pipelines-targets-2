@@ -1,13 +1,11 @@
-create_dirs <- function(site_num){
-  download_files_to <- file.path('1_fetch/out', paste0('nwis_', site_num, '_data.csv'))
-  return(download_files_to)
-}
 
-download_nwis_site_data <- function(site_num, download_files_to, parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01"){
+download_nwis_site_data <- function(site_num, download_files_to){
+  #create a directory to download the files to
+  download_files_to <- file.path('1_fetch/out', paste0('nwis_', site_num, '_data.csv'))
   
   # readNWISdata is from the dataRetrieval package
   data_out <- readNWISdata(sites=site_num, service="iv", 
-                           parameterCd = parameterCd, startDate = startDate, endDate = endDate)
+                           parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01")
   
   # -- simulating a failure-prone web-sevice here, do not edit --
   set.seed(Sys.time())
@@ -15,23 +13,22 @@ download_nwis_site_data <- function(site_num, download_files_to, parameterCd = '
     stop(site_num, ' has failed due to connection timeout. Try tar_make() again')
   }
   # -- end of do-not-edit block
-  correct_dir <- download_files_to[grep(site_num,download_files_to)]
-  write_csv(data_out, file = correct_dir)
-  return(correct_dir)
+  write_csv(data_out, file = download_files_to)
+  return(download_files_to)
 }
 
-concat_files_to_df <- function(){
-  downloaded_data <- list.files(path = '1_fetch/out', pattern = '_data.csv', full.names = T)
+concat_files_to_df <- function(csv_1, csv_2, csv_3, csv_4, csv_5){
+  downloaded_files <- c(csv_1, csv_2, csv_3, csv_4, csv_5)
   data_out <- data.frame()
-  for(downloaded_data in downloaded_data){
-    these_data <- read_csv(downloaded_data, col_types = 'ccTdcc')
+  for(df in downloaded_files){
+    these_data <- read_csv(df, col_types = 'ccTdcc')
     data_out <- bind_rows(data_out, these_data)
   }
   return(data_out)
 }
 
-nwis_site_info <- function(fileout, sites){
-  site_info <- dataRetrieval::readNWISsite(sites)
+nwis_site_info <- function(fileout){
+  site_info <- dataRetrieval::readNWISsite(siteNumbers=c("01427207", "01432160","01435000", "01436690", "01466500"))
   write_csv(site_info, file.path(fileout,'site_info.csv'))
   return(file.path(fileout,'site_info.csv'))
 }
