@@ -31,15 +31,15 @@ download_nwis_site_data_object <- function(site_num){
   return(data_out)
 }
 
-concat_files_to_df <- function(target_files, target_object_1, target_object_2){
+concat_files_to_df <- function(target_object_1, target_object_2, target_object_3, target_object_4, target_object_5){
 
-  data_out_files <- data.frame()
-  for(df_files in target_files){
-    these_data <- read_csv(df_files, col_types = 'ccTdcc')
-    data_out_files <- bind_rows(data_out_files, these_data)
-  }
+  # data_out_files <- data.frame()
+  # for(df_files in target_files){
+  #   these_data <- read_csv(df_files, col_types = 'ccTdcc')
+  #   data_out_files <- bind_rows(data_out_files, these_data)
+  # }
   
-  data_out <- bind_rows(data_out_files, target_object_1, target_object_2)
+  data_out <- bind_rows(target_object_1, target_object_2, target_object_3, target_object_4, target_object_5)
   return(data_out)
 }
 

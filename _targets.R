@@ -13,19 +13,16 @@ tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse b
 
 p1_targets_list <- list(
   tar_target(
-    nwis_01427207_data_csv,
-    download_nwis_site_data_file("01427207","nwis_01427207_data.csv"),
-    format = "file"
+    nwis_01427207_data,
+    download_nwis_site_data_object("01427207")
   ),
   tar_target(
-    nwis_01432160_data_csv,
-    download_nwis_site_data_file("01432160","nwis_01432160_data.csv"),
-    format = "file"
+    nwis_01432160_data,
+    download_nwis_site_data_object("01432160")
   ),
   tar_target(
-    nwis_01435000_data_csv,
-    download_nwis_site_data_file("01435000","nwis_01435000_data.csv"),
-    format = "file"
+    nwis_01435000_data,
+    download_nwis_site_data_object("01435000")
   ),
   tar_target(
     nwis_01436690_data,
@@ -37,7 +34,7 @@ p1_targets_list <- list(
   ),
   tar_target(
     site_data_concat,
-    concat_files_to_df(target_files = c(nwis_01427207_data_csv, nwis_01432160_data_csv, nwis_01435000_data_csv), target_object_1 = nwis_01436690_data, target_object_2 = nwis_01466500_data)
+    concat_files_to_df(target_object_1 = nwis_01427207_data, target_object_2 = nwis_01432160_data, target_object_3 = nwis_01435000_data, target_object_4 = nwis_01436690_data, target_object_5 = nwis_01466500_data)
   ),
   tar_target(
     site_info_csv,
@@ -52,13 +49,12 @@ p2_targets_list <- list(
     process_data(site_data_concat)
   ),
   tar_target(
-    site_data_annotated_csv,
-    annotate_data(site_data_clean, site_filename = site_info_csv, save_annotated_data_csv = '2_process/out/site_data_annotated.csv'),
-    format = 'file'
+    site_data_annotated,
+    annotate_data(site_data_clean, site_filename = site_info_csv)
   ),
   tar_target(
     site_data_styled,
-    style_data(site_data_annotated_csv)
+    style_data(site_data_annotated)
   )
 )
 
