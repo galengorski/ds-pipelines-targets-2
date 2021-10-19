@@ -1,5 +1,6 @@
 
-download_nwis_site_data <- function(site_num, download_files_to){
+#function for downloading data to targets file
+download_nwis_site_data_file <- function(site_num, download_files_to){
   # readNWISdata is from the dataRetrieval package
   data_out <- readNWISdata(sites=site_num, service="iv", 
                            parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01")
@@ -14,13 +15,31 @@ download_nwis_site_data <- function(site_num, download_files_to){
   return(download_files_to)
 }
 
-concat_files_to_df <- function(downloaded_files){
-  #downloaded_files <- c(csv_1, csv_2, csv_3, csv_4, csv_5)
-  data_out <- data.frame()
-  for(df in downloaded_files){
-    these_data <- read_csv(df, col_types = 'ccTdcc')
-    data_out <- bind_rows(data_out, these_data)
+#function for downloading data to targets object 
+download_nwis_site_data_object <- function(site_num){
+  # readNWISdata is from the dataRetrieval package
+  data_out <- readNWISdata(sites=site_num, service="iv", 
+                           parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01")
+  
+  # -- simulating a failure-prone web-sevice here, do not edit --
+  set.seed(Sys.time())
+  if (sample(c(T,F,F,F), 1)){
+    stop(site_num, ' has failed due to connection timeout. Try tar_make() again')
   }
+  # -- end of do-not-edit block
+  #write_csv(data_out, file = download_files_to)
+  return(data_out)
+}
+
+concat_files_to_df <- function(target_files, target_object_1, target_object_2){
+
+  data_out_files <- data.frame()
+  for(df_files in target_files){
+    these_data <- read_csv(df_files, col_types = 'ccTdcc')
+    data_out_files <- bind_rows(data_out_files, these_data)
+  }
+  
+  data_out <- bind_rows(data_out_files, target_object_1, target_object_2)
   return(data_out)
 }
 
